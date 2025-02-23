@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Cartão de Crédito{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Editar Cartão de Crédito</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Editar Cartão</h5>
+            <form action="/edit_card/{{ card._id }}" method="POST" class="row g-3">
+                <!-- Nome do Banco -->
+                <div class="col-md-6">
+                    <label for="nome_banco" class="form-label">Nome do Banco</label>
+                    <input type="text" class="form-control" id="nome_banco" name="nome_banco" value="{{ card.nome_banco }}" required>
+                </div>
+                <!-- Limite do Cartão -->
+                <div class="col-md-6">
+                    <label for="limite" class="form-label">Limite (R$)</label>
+                    <input type="number" class="form-control" id="limite" name="limite" value="{{ card.limite }}" step="0.01" required>
+                </div>
+                <!-- Número do Cartão -->
+                <div class="col-md-6">
+                    <label for="numero_cartao" class="form-label">Número do Cartão</label>
+                    <input type="text" class="form-control" id="numero_cartao" name="numero_cartao" value="{{ card.numero_cartao }}" placeholder="Ex.: 1234 5678 9876 5432" required>
+                </div>
+                <!-- Data de Vencimento -->
+                <div class="col-md-6">
+                    <label for="data_vencimento" class="form-label">Data de Vencimento</label>
+                    <input type="date" class="form-control" id="data_vencimento" name="data_vencimento" value="{{ card.data_vencimento }}" required>
+                </div>
+                <!-- Botão Salvar -->
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-save"></i> Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

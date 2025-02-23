@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Gerenciar Cartões de Crédito{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Gerenciar Cartões de Crédito</h1>
+
+    <!-- Adicionar Cartão -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Adicionar Novo Cartão</h5>
+            <form action="/view_cards" method="POST" class="row g-3">
+                <!-- Nome do Banco -->
+                <div class="col-md-6">
+                    <label for="nome_banco" class="form-label">Nome do Banco</label>
+                    <input type="text" class="form-control" id="nome_banco" name="nome_banco" required>
+                </div>
+                <!-- Limite do Cartão -->
+                <div class="col-md-6">
+                    <label for="limite" class="form-label">Limite (R$)</label>
+                    <input type="number" class="form-control" id="limite" name="limite" step="0.01" required>
+                </div>
+                <!-- Número do Cartão -->
+                <div class="col-md-6">
+                    <label for="numero_cartao" class="form-label">Número do Cartão</label>
+                    <input type="text" class="form-control" id="numero_cartao" name="numero_cartao" placeholder="Ex.: 1234 5678 9876 5432" required>
+                </div>
+                <!-- Data de Vencimento -->
+                <div class="col-md-6">
+                    <label for="data_vencimento" class="form-label">Data de Vencimento</label>
+                    <input type="date" class="form-control" id="data_vencimento" name="data_vencimento" required>
+                </div>
+                <!-- Botão Adicionar -->
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle"></i> Adicionar Cartão
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Listar Cartões -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Cartões de Crédito Cadastrados</h5>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Banco</th>
+                        <th>Limite (R$)</th>
+                        <th>Número do Cartão</th>
+                        <th>Data de Vencimento</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cartao in cartoes %}
+                    <tr>
+                        <td>{{ cartao.nome_banco }}</td>
+                        <td>R$ {{ cartao.limite | round(2) }}</td>
+                        <td>{{ cartao.numero_cartao[:4] }}****</td>
+                        <td>{{ cartao.data_vencimento }}</td>
+                        <td>
+                            <!-- Editar -->
+                            <a href="/edit_card/{{ cartao._id }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                            <!-- Excluir -->
+                            <form action="/delete_card/{{ cartao._id }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Registro de Transações{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Registro de Transações</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Banco</th>
+                <th>Tópico</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transacao in transacoes %}
+            <tr>
+                <td>{{ transacao['_id'].generation_time.strftime('%Y-%m-%d') }}</td>
+                <td>{{ transacao.descricao }}</td>
+                <td>R$ {{ transacao.valor | round(2) }}</td>
+                <td>
+                    {% if transacao.tipo == 'Entrada' %}
+                    <span class="badge bg-success">{{ transacao.tipo }}</span>
+                    {% else %}
+                    <span class="badge bg-danger">{{ transacao.tipo }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ transacao.banco }}</td>
+                <td>{{ transacao.topico }}</td>
+                <td>
+                    <!-- Botão Editar -->
+                    <form action="/edit_transaction/{{ transacao['_id'] }}" method="GET" style="display: inline;">
+                        <button type="submit" class="btn btn-warning btn-sm">Editar</button>
+                    </form>
+                    <!-- Botão Excluir -->
+                    <form action="/delete_transaction/{{ transacao['_id'] }}" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginação -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if pagina > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="/registro_transacoes?pagina={{ pagina - 1 }}">Anterior</a>
+            </li>
+            {% endif %}
+            {% for p in range(1, total_paginas + 1) %}
+            <li class="page-item {% if p == pagina %}active{% endif %}">
+                <a class="page-link" href="/registro_transacoes?pagina={{ p }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+            {% if pagina < total_paginas %}
+            <li class="page-item">
+                <a class="page-link" href="/registro_transacoes?pagina={{ pagina + 1 }}">Próxima</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}

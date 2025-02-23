@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Transação{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Editar Transação</h1>
+    <form action="/edit_transaction/{{ transacao['_id'] }}" method="POST">
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <input type="text" class="form-control" id="descricao" name="descricao" value="{{ transacao.descricao }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="valor" class="form-label">Valor</label>
+            <input type="number" class="form-control" id="valor" name="valor" step="0.01" value="{{ transacao.valor }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo</label>
+            <select class="form-control" id="tipo" name="tipo" required>
+                <option value="Entrada" {% if transacao.tipo == 'Entrada' %}selected{% endif %}>Entrada</option>
+                <option value="Saída" {% if transacao.tipo == 'Saída' %}selected{% endif %}>Saída</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="topico" class="form-label">Tópico</label>
+            <select class="form-control" id="topico" name="topico" required>
+                {% for topico in topicos %}
+                <option value="{{ topico.nome }}" {% if topico.nome == transacao.topico %}selected{% endif %}>{{ topico.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="banco" class="form-label">Banco</label>
+            <select class="form-control" id="banco" name="banco" required>
+                {% for banco in bancos %}
+                <option value="{{ banco._id }}" {% if banco._id == transacao.banco %}selected{% endif %}>{{ banco.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+    </form>
+</div>
+{% endblock %}

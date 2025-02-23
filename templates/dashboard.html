@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">Bem-vindo, {{ user }}</h1>
+    <p class="text-center">Este é o seu painel principal para visualizar o resumo das suas finanças.</p>
+
+    <!-- Resumo dos Totais -->
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card shadow-lg border-success">
+                <div class="card-body">
+                    <h5 class="card-title text-success">
+                        <i class="bi bi-wallet2"></i> Saldo Total
+                    </h5>
+                    <p class="display-6 text-success">R$ {{ total_saldo | round(2) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg border-danger">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">
+                        <i class="bi bi-arrow-down-circle"></i> Despesas Totais
+                    </h5>
+                    <p class="display-6 text-danger">R$ {{ total_despesas | round(2) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg border-primary">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="bi bi-arrow-up-circle"></i> Entradas Totais
+                    </h5>
+                    <p class="display-6 text-primary">R$ {{ total_entradas | round(2) }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ações Rápidas -->
+    <div class="mt-5">
+        <h3 class="text-center mb-4">Ações Rápidas</h3>
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <a href="/add_transaction" class="btn btn-primary btn-lg w-100 shadow">
+                    <i class="bi bi-plus-circle"></i> Adicionar Transação
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/view_banks" class="btn btn-success btn-lg w-100 shadow">
+                    <i class="bi bi-bank"></i> Gerenciar Bancos
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/manage_topics" class="btn btn-warning btn-lg w-100 shadow">
+                    <i class="bi bi-tags"></i> Gerenciar Tópicos
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

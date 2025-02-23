@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Configurações{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Configurações</h1>
+        <form action="/settings" method="POST">
+            <div class="mb-3">
+                <label for="fonte" class="form-label">Fonte</label>
+                <select class="form-select" id="fonte" name="fonte">
+                    <option value="default">Padrão</option>
+                    <option value="serif">Serif</option>
+                    <option value="sans-serif">Sans-serif</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="tamanho_fonte" class="form-label">Tamanho da Fonte</label>
+                <input type="number" class="form-control" id="tamanho_fonte" name="tamanho_fonte" min="12" max="24">
+            </div>
+            <div class="mb-3">
+                <label for="tamanho_botoes" class="form-label">Tamanho dos Botões</label>
+                <input type="number" class="form-control" id="tamanho_botoes" name="tamanho_botoes" min="12" max="24">
+            </div>
+            <div class="mb-3">
+                <label for="cor_navbar" class="form-label">Cor da Navbar</label>
+                <input type="color" class="form-control form-control-color" id="cor_navbar" name="cor_navbar">
+            </div>
+            <button type="submit" class="btn btn-success">Salvar Configurações</button>
+        </form>
+    </div>
+{% endblock %}

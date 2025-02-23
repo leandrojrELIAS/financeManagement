@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Backup{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Backup</h1>
+    <p>Faça o download de um backup completo dos dados do sistema.</p>
+    <a href="/backup" class="btn btn-primary">Fazer Backup</a>
+    <hr>
+    <h2>Restaurar Dados</h2>
+    <a href="/restaurar_dados" class="btn btn-warning">Restaurar Backup</a>
+</div>
+{% endblock %}

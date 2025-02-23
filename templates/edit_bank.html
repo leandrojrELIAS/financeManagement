@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Banco{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Editar Banco</h1>
+        <form action="/edit_bank/{{ banco._id }}" method="POST">
+            <div class="mb-3">
+                <label for="nome_banco" class="form-label">Nome do Banco</label>
+                <input type="text" class="form-control" id="nome_banco" name="nome_banco" value="{{ banco.nome }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="saldo" class="form-label">Saldo</label>
+                <input type="number" class="form-control" id="saldo" name="saldo" value="{{ banco.saldo }}" step="0.01" required>
+            </div>
+            <button type="submit" class="btn btn-success">Salvar Alterações</button>
+        </form>
+    </div>
+{% endblock %}

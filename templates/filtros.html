@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Filtros{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Filtros</h1>
+
+    <!-- Formulário de Filtro -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Pesquisar Transações</h5>
+            <form action="/filtros" method="POST" class="row g-3">
+                <div class="col-md-8">
+                    <label for="criterio" class="form-label">Critério de Busca</label>
+                    <input type="text" class="form-control" id="criterio" name="criterio" placeholder="Nome ou Tópico">
+                </div>
+                <div class="col-md-4">
+                    <label for="tipo_filtro" class="form-label">Filtrar por</label>
+                    <select class="form-select" id="tipo_filtro" name="tipo_filtro">
+                        <option value="descricao">Nome</option>
+                        <option value="topico">Tópico</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> Pesquisar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resultados -->
+    {% if resultados %}
+    <h3 class="mb-4">Resultados da Pesquisa</h3>
+    <div class="row">
+        {% for transacao in resultados %}
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ transacao.descricao }}</h5>
+                    <p class="card-text">
+                        <strong>Data:</strong> {{ transacao['_id'].generation_time.strftime('%Y-%m-%d') }}<br>
+                        <strong>Valor:</strong> R$ {{ transacao.valor | round(2) }}<br>
+                        <strong>Tipo:</strong>
+                        {% if transacao.tipo == 'Entrada' %}
+                        <span class="badge bg-success">{{ transacao.tipo }}</span>
+                        {% else %}
+                        <span class="badge bg-danger">{{ transacao.tipo }}</span>
+                        {% endif %}
+                        <br>
+                        <strong>Banco:</strong> {{ transacao.banco }}<br>
+                        <strong>Tópico:</strong> {{ transacao.topico }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Saldo Acumulado -->
+    <div class="alert alert-info mt-4">
+        <h4 class="mb-0">Saldo Acumulado: R$ {{ saldo_acumulado | round(2) }}</h4>
+    </div>
+    {% else %}
+    <div class="alert alert-warning mt-4">
+        Nenhum resultado encontrado para a pesquisa.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

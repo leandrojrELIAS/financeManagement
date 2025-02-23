@@ -1,0 +1,42 @@
+/* Estilos para Navbar lateral */
+.sidebar {
+    background-color: #343a40; /* Cor padrão do navbar */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    overflow-y: auto;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+}
+
+/* Ajuste para conteúdo principal */
+.container-fluid {
+    margin-left: 250px; /* Espaço para o navbar lateral */
+    padding: 20px;
+}
+
+/* Listagem de tópicos */
+.list-group-item {
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 15px;
+    color: #191717;
+}
+
+/* Botões */
+.btn {
+    border-radius: 5px;
+}

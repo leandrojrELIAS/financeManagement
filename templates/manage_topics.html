@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Gerenciar Tópicos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Gerenciar Tópicos</h1>
+
+    <!-- Formulário para Adicionar Novo Tópico -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Adicionar Novo Tópico</h5>
+            <form action="/add_topic" method="POST" class="row g-3">
+                <!-- Nome do Tópico -->
+                <div class="col-md-8">
+                    <label for="nome_topico" class="form-label">Nome do Tópico</label>
+                    <input type="text" class="form-control" id="nome_topico" name="nome_topico" placeholder="Ex.: Alimentação" required>
+                </div>
+                <!-- Cor do Tópico -->
+                <div class="col-md-4">
+                    <label for="cor_topico" class="form-label">Cor</label>
+                    <input type="color" class="form-control form-control-color" id="cor_topico" name="cor_topico" value="#000000" required>
+                </div>
+                <!-- Botão Adicionar -->
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle"></i> Adicionar Tópico
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lista de Tópicos Registrados -->
+    <div class="row">
+        {% for topico in topicos %}
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4" style="border-left: 5px solid {{ topico.cor }};">
+                <div class="card-body">
+                    <h5 class="card-title">{{ topico.nome }}</h5>
+                    <div class="d-flex justify-content-between">
+                        <!-- Botão Excluir -->
+                        <form action="/delete_topic/{{ topico._id }}" method="POST">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Excluir
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

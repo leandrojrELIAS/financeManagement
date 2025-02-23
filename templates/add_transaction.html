@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Adicionar Transação{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Adicionar Transação</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Nova Transação</h5>
+            <form action="/add_transaction" method="POST" class="row g-3">
+                <!-- Descrição -->
+                <div class="col-md-6">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <input type="text" class="form-control" id="descricao" name="descricao"
+                        placeholder="Descrição da transação" required>
+                </div>
+                <!-- Valor -->
+                <div class="col-md-6">
+                    <label for="valor" class="form-label">Valor (R$)</label>
+                    <input type="number" class="form-control" id="valor" name="valor" step="0.01"
+                        placeholder="Ex.: 100.50" required>
+                </div>
+                <!-- Tipo -->
+                <div class="col-md-6">
+                    <label for="tipo" class="form-label">Tipo</label>
+                    <select class="form-select" id="tipo" name="tipo" required>
+                        <option value="Entrada">Entrada</option>
+                        <option value="Saída">Saída</option>
+                    </select>
+                </div>
+                <!-- Data da Transação -->
+                <div class="col-md-6">
+                    <label for="data" class="form-label">Data da Transação</label>
+                    <input type="date" class="form-control" id="data" name="data" required>
+                </div>
+
+                <!-- Tópico -->
+                <div class="col-md-6">
+                    <label for="topico" class="form-label">Tópico</label>
+                    <select class="form-select" id="topico" name="topico" required>
+                        {% for topico in topicos %}
+                        <option value="{{ topico.nome }}">{{ topico.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Banco -->
+                <div class="col-md-12">
+                    <label for="banco" class="form-label">Banco</label>
+                    <select class="form-select" id="banco" name="banco" required>
+                        {% for banco in bancos %}
+                        <option value="{{ banco._id }}">{{ banco.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Cartão de Crédito -->
+                <div class="col-md-12">
+                    <label for="cartao" class="form-label">Cartão de Crédito</label>
+                    <select class="form-select" id="cartao" name="cartao" onchange="toggleBankField()">
+                        <option value="">Selecione um Cartão</option>
+                        {% for cartao in cartoes %}
+                        <option value="{{ cartao._id }}">{{ cartao.nome_banco }} - {{ cartao.numero_cartao[:4] }}****
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Botão Adicionar -->
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-plus-circle"></i> Adicionar Transação
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Função para desmarcar ou limpar o campo do banco quando Cartão de Crédito é selecionado
+    function toggleBankField() {
+        var bancoField = document.getElementById("banco");
+        var cartaoField = document.getElementById("cartao");
+
+        if (cartaoField.value) {
+            // Se um cartão de crédito for selecionado, limpar e desabilitar o campo do banco
+            bancoField.value = "";  // Limpar a seleção do banco
+            bancoField.disabled = true;  // Desabilitar o campo Banco
+        } else {
+            // Se nenhum cartão for selecionado, habilitar o campo do banco
+            bancoField.disabled = false;  // Habilitar o campo Banco
+        }
+    }
+</script>
+
+{% endblock %}

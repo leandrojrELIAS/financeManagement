@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Gerenciar Bancos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Gerenciar Bancos</h1>
+
+    <!-- Formulário para Adicionar Novo Banco -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Adicionar Novo Banco</h5>
+            <form action="/add_bank" method="POST" class="row g-3">
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="nome_banco" placeholder="Nome do Banco" required>
+                </div>
+                <div class="col-md-4">
+                    <input type="number" class="form-control" name="saldo_inicial" placeholder="Saldo Inicial (R$)" step="0.01" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100">Adicionar Banco</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lista de Bancos -->
+    <div class="row">
+        {% for banco in bancos %}
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ banco.nome }}</h5>
+                    <p class="card-text">
+                        <strong>Saldo:</strong> R$ {{ banco.saldo | round(2) }}
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <!-- Botão Editar -->
+                        <form action="/edit_bank/{{ banco._id }}" method="GET">
+                            <button type="submit" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </button>
+                        </form>
+                        <!-- Botão Excluir -->
+                        <form action="/delete_bank/{{ banco._id }}" method="POST">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Excluir
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
